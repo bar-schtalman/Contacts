@@ -1,0 +1,49 @@
+<!-- res/layout/contact_item.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <!-- Add your contact information views here -->
+    <TextView
+        android:id="@+id/contactInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Contact Info"
+        android:textSize="18sp"
+        android:paddingRight="8dp"/>
+
+    <!-- Add your edit and delete icons here -->
+    <ImageView
+        android:id="@+id/viewicon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/view"
+        android:clickable="true"
+        android:onClick="onDeleteClick"
+        android:padding="8dp"/>
+
+    <ImageView
+        android:id="@+id/editIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/edit"
+        android:clickable="true"
+        android:onClick="onEditClick"
+        android:padding="8dp"/>
+
+    <ImageView
+        android:id="@+id/deleteIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/delete"
+        android:clickable="true"
+        android:onClick="onDeleteClick"
+        android:padding="8dp"/>
+
+
+
+</LinearLayout>
