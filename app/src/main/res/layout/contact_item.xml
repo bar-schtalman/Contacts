@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp">
+    android:padding="4dp">
 
     <!-- Add your contact information views here -->
     <TextView
         android:id="@+id/contactInfo"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="Contact Info"
         android:textSize="18sp"
@@ -23,7 +23,8 @@
         android:layout_height="40dp"
         android:src="@drawable/view"
         android:clickable="true"
-        android:onClick="onDeleteClick"
+        android:onClick="onViewClick"
+        android:visibility="invisible"
         android:padding="8dp"/>
 
     <ImageView
@@ -33,6 +34,7 @@
         android:src="@drawable/edit"
         android:clickable="true"
         android:onClick="onEditClick"
+        android:visibility="invisible"
         android:padding="8dp"/>
 
     <ImageView
@@ -42,6 +44,27 @@
         android:src="@drawable/delete"
         android:clickable="true"
         android:onClick="onDeleteClick"
+        android:visibility="invisible"
+        android:padding="8dp"/>
+
+    <ImageView
+        android:id="@+id/phoneIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/phone"
+        android:clickable="true"
+        android:onClick="onPhoneClick"
+        android:visibility="invisible"
+        android:padding="8dp"/>
+
+    <ImageView
+        android:id="@+id/smsIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/sms"
+        android:clickable="true"
+        android:onClick="onSmsClick"
+        android:visibility="invisible"
         android:padding="8dp"/>
 
 

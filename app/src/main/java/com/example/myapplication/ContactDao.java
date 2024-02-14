@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -22,6 +23,14 @@ public interface ContactDao {
 
     @Query("SELECT * FROM contacts WHERE user_id = :userId ORDER BY phone_number ")
     List<Contact> getContactsForUserByPhoneNumber(long userId);
+
+    @Query("DELETE FROM contacts WHERE id = :id")
+    void deleteContact(long id);
+    @Update
+    void editContact(Contact contact);
+
+
+
 
 
     // other queries...

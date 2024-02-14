@@ -4,8 +4,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "contacts")
-public class Contact {
+public class Contact implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public long id;
 
@@ -112,11 +114,21 @@ public class Contact {
         return userId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
 
     public String getGender(){
         return gender;
     }
+    public void setGender(String gender){
+        this.gender=gender;
+    }
+    public void editContact(String firstName,String lastName,String phone,String address,String company,String email,String gender){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.email = email;
+        this.phoneNumber = phone;
+        this.gender = gender;
+        this.companyName = company;
+    }
+
 }
