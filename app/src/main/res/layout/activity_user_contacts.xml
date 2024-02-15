@@ -8,10 +8,12 @@
     tools:context=".UserContacts">
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+
         android:id="@+id/add"
         android:layout_width="100dp"
         android:layout_height="50dp"
+        android:background="@drawable/rounded_button"
         android:minHeight="48dp"
         android:text="+"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,11 +23,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.98" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+
         android:id="@+id/logout"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:minHeight="48dp"
+        android:background="@drawable/rounded_button"
+
         android:text="logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,8 +39,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.98" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+
         android:id="@+id/sort"
+        android:background="@drawable/rounded_button"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:minHeight="48dp"
@@ -47,9 +54,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.98" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+
         android:id="@+id/changeDetails"
         android:layout_width="100dp"
+        android:background="@drawable/rounded_button"
+
         android:layout_height="50dp"
         android:minHeight="48dp"
         android:text="change details"

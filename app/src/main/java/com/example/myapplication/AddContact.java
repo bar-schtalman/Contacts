@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 public class AddContact extends AppCompatActivity {
     EditText firstName_txt, lastName_txt, phone_txt, company_txt, email_txt, address_txt;
-    String firstName, lastName, phone, company, email, address,gender;
+    String contactName,firstName, lastName, phone, company, email, address,gender;
     public long uid;
     Button addContact;
     String API = "https://api.genderize.io/?name=";
@@ -55,7 +55,6 @@ public class AddContact extends AppCompatActivity {
 
                 genderizeAsyncTask.execute(firstName);
 
-                // Continue with other fields (phone, company, email, address) if needed
                 phone = phone_txt.getText().toString();
                 company = company_txt.getText().toString();
                 email = email_txt.getText().toString();

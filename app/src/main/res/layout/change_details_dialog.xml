@@ -6,28 +6,17 @@
     android:layout_height="match_parent">
 
     <CheckBox
-        android:id="@+id/checkBoxFirstName"
+        android:id="@+id/checkBoxName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="First name"
-        app:layout_constraintBottom_toTopOf="@+id/checkBoxLastName"
+        android:text="Contact name"
+        app:layout_constraintBottom_toTopOf="@+id/checkBoxPhoneNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.029" />
 
-    <CheckBox
-        android:id="@+id/checkBoxLastName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Last name"
-        app:layout_constraintBottom_toTopOf="@+id/checkBoxPhoneNumber"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxFirstName"
-        app:layout_constraintVertical_bias="0.086" />
 
     <CheckBox
         android:id="@+id/checkBoxPhoneNumber"
@@ -38,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxLastName"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxName"
         app:layout_constraintVertical_bias="0.143" />
 
     <CheckBox
@@ -89,8 +78,10 @@
         app:layout_constraintTop_toBottomOf="@+id/checkBoxCompany"
         app:layout_constraintVertical_bias="0.371" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+
         android:id="@+id/apply"
+        android:background="@drawable/rounded_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Apply"

@@ -124,8 +124,7 @@ public class UserContacts extends AppCompatActivity {
         View dialogView = getLayoutInflater().inflate(R.layout.change_details_dialog, null);
 
         // Find checkboxes and button in the dialog
-        CheckBox checkBoxFirstName = dialogView.findViewById(R.id.checkBoxFirstName);
-        CheckBox checkBoxLastName = dialogView.findViewById(R.id.checkBoxLastName);
+        CheckBox checkBoxFullName = dialogView.findViewById(R.id.checkBoxName);
         CheckBox checkBoxPhoneNumber = dialogView.findViewById(R.id.checkBoxPhoneNumber);
         CheckBox checkBoxCompany = dialogView.findViewById(R.id.checkBoxCompany);
         CheckBox checkBoxAddress = dialogView.findViewById(R.id.checkBoxAddress);
@@ -136,8 +135,7 @@ public class UserContacts extends AppCompatActivity {
         Button btnApply = dialogView.findViewById(R.id.apply);
 
         // Set the initial state of checkboxes based on selectedDetails
-        checkBoxFirstName.setChecked(selectedDetails.contains("first_name"));
-        checkBoxLastName.setChecked(selectedDetails.contains("last_name"));
+        checkBoxFullName.setChecked(selectedDetails.contains("first_name"));
         checkBoxPhoneNumber.setChecked(selectedDetails.contains("phone_number"));
         checkBoxCompany.setChecked(selectedDetails.contains("company_name"));
         checkBoxEmail.setChecked(selectedDetails.contains("email"));
@@ -156,11 +154,8 @@ public class UserContacts extends AppCompatActivity {
             public void onClick(View v) {
                 // Update selectedDetails based on the checkboxes
                 selectedDetails.clear();
-                if (checkBoxFirstName.isChecked()) {
+                if (checkBoxFullName.isChecked()) {
                     selectedDetails.add("first_name");
-                }
-                if (checkBoxLastName.isChecked()) {
-                    selectedDetails.add("last_name");
                 }
                 if(checkBoxPhoneNumber.isChecked()){
                     selectedDetails.add("phone_number");
@@ -221,27 +216,50 @@ public class UserContacts extends AppCompatActivity {
             contactContainer.removeAllViews(); // Clear existing views
 
             for (Contact c : userContacts) {
-                View contactItemView = getLayoutInflater().inflate(R.layout.contact_item, null);
-                TextView contactInfo = contactItemView.findViewById(R.id.contactInfo);
+                View contactItemView = getLayoutInflater().inflate(R.layout.contact_item3, null);
+                TextView contactName = contactItemView.findViewById(R.id.textName);
+                TextView contactEmail = contactItemView.findViewById(R.id.textEmail);
+                TextView contactAddress = contactItemView.findViewById(R.id.textAddress);
+                TextView contactGender = contactItemView.findViewById(R.id.textGender);
+                TextView contactCompany = contactItemView.findViewById(R.id.textCompany);
+                TextView contactPhoneNumber = contactItemView.findViewById(R.id.textNumber);
                 ImageView editIcon = contactItemView.findViewById(R.id.editIcon);
                 ImageView deleteIcon = contactItemView.findViewById(R.id.deleteIcon);
-                ImageView viewIcon = contactItemView.findViewById(R.id.viewicon);
-                ImageView phoneIcon = contactItemView.findViewById(R.id.phoneIcon);
                 ImageView smsIcon = contactItemView.findViewById(R.id.smsIcon);
+                ImageView phoneIcon = contactItemView.findViewById(R.id.phoneIcon);
+                ImageView contactImage = contactItemView.findViewById(R.id.imageContact);
+                ImageView viewIcon = contactItemView.findViewById(R.id.viewIcon);
 
                 // Set contact information
-                contactInfo.setText(getFormattedContactText(c));
+                String name = c.getFirstName() +" "+c.getLastName();
+                contactName.setText(name);
+                contactEmail.setText(c.getEmail());
+                contactAddress.setText(c.getAddress());
+                contactGender.setText(c.getGender());
+                contactCompany.setText(c.getCompanyName());
+                contactPhoneNumber.setText(c.getPhoneNumber());
+
+                contactName.setVisibility(selectedDetails.contains("first_name") ? View.VISIBLE : View.GONE);
+                contactEmail.setVisibility(selectedDetails.contains("email") ? View.VISIBLE : View.GONE);
+                contactAddress.setVisibility(selectedDetails.contains("address") ? View.VISIBLE : View.GONE);
+                contactGender.setVisibility(selectedDetails.contains("gender") ? View.VISIBLE : View.GONE);
+                contactCompany.setVisibility(selectedDetails.contains("company_name") ? View.VISIBLE : View.GONE);
+                contactPhoneNumber.setVisibility(selectedDetails.contains("phone_number") ? View.VISIBLE : View.GONE);
+
 
                 contactItemView.setTag(c.getId());
 
                 // Add click listener to the contact name (contactInfo)
-                contactInfo.setOnClickListener(new View.OnClickListener() {
+
+                contactImage.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        // Toggle visibility of icons when contact name is clicked
+                    public void onClick(View view) {
+                        Log.d("UserContacts", "inside contectimage clicklisitner");
+
                         toggleIconsVisibility(contactItemView);
                     }
                 });
+
                 // Set click listeners for edit and delete icons
                 editIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -262,12 +280,7 @@ public class UserContacts extends AppCompatActivity {
                         new DeleteContactAsyncTask().execute(contactId);                    }
                 });
 
-                viewIcon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        showViewContactDialog(c);
-                    }
-                });
+
 
                 phoneIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -284,6 +297,15 @@ public class UserContacts extends AppCompatActivity {
                         startActivity(smsIntent);
                     }
                 });
+
+                viewIcon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showViewContactDialog(c);
+                    }
+                });
+
+
 
                 // Add the contact item view to the contact container
                 contactContainer.addView(contactItemView);
@@ -361,17 +383,17 @@ public class UserContacts extends AppCompatActivity {
         // Find the icons in the clicked contact item
         ImageView editIcon = clickedContactItem.findViewById(R.id.editIcon);
         ImageView deleteIcon = clickedContactItem.findViewById(R.id.deleteIcon);
-        ImageView viewIcon = clickedContactItem.findViewById(R.id.viewicon);
         ImageView phoneIcon = clickedContactItem.findViewById(R.id.phoneIcon);
         ImageView smsIcon = clickedContactItem.findViewById(R.id.smsIcon);
+        ImageView viewIcon = clickedContactItem.findViewById(R.id.viewIcon);
 
         // Toggle visibility of icons
         int visibility = (editIcon.getVisibility() == View.VISIBLE) ? View.INVISIBLE : View.VISIBLE;
         editIcon.setVisibility(visibility);
         deleteIcon.setVisibility(visibility);
-        viewIcon.setVisibility(visibility);
         phoneIcon.setVisibility(visibility);
         smsIcon.setVisibility(visibility);
+        viewIcon.setVisibility(visibility);
     }
 
     private class DeleteContactAsyncTask extends AsyncTask<Long, Void, Void> {
