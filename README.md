@@ -22,8 +22,14 @@ A simple contacts application that allows users to manage their contacts. Users 
 - **API:** [Genderize API](https://api.genderize.io/?name=luc)
 
 ## Screenshots
+<div style="display: flex; flex-direction: row;">
+    <img src="https://github.com/bar-schtalman/Contacts/blob/master/app/src/main/res/APPPics/welcome.jpg" alt="welcome" width="200"/>
+    <img src="https://github.com/bar-schtalman/Contacts/blob/34104856e526a7accc95c07a779de7abae22e04c/app/src/main/res/APPPics/add_contact.jpg" alt="add contact" width="200"/>
+    <img src="https://github.com/bar-schtalman/Contacts/blob/34104856e526a7accc95c07a779de7abae22e04c/app/src/main/res/APPPics/contact_list.jpg" alt="contact list" width="200"/>
+    <img src="https://github.com/bar-schtalman/Contacts/blob/master/app/src/main/res/APPPics/contact_list2.jpg" alt="contact_list2" width="200"/>
+    <img src="https://github.com/bar-schtalman/Contacts/blob/34104856e526a7accc95c07a779de7abae22e04c/app/src/main/res/APPPics/choost_details.jpg" alt="choose details" width="200"/>
+</div>
 
-Include screenshots here to showcase the user interface and key features of your application.
 
 ## Usage
 
