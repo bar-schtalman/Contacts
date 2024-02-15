@@ -1,6 +1,6 @@
 # Contacts Application
 
-![App Screenshot](/path/to/screenshot.png)
+![App Screenshot](https://github.com/bar-schtalman/Contacts/blob/54c70c570a55fd1ac564983e47feb17b0edc9620/app/src/main/res/drawable/contact.png)
 
 A simple contacts application that allows users to manage their contacts. Users can sign up, log in, add, edit, and delete contacts. Each user has access to their own contacts, and the application automatically sets contact gender using the [Genderize API](https://api.genderize.io/?name=luc).
 
