@@ -27,6 +27,7 @@ public class Register extends AppCompatActivity {
         editTextPassword = findViewById(R.id.passwordEditText);
 
         // Set click listener for the "Register" button
+// Set click listener for the "Register" button
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,10 +35,17 @@ public class Register extends AppCompatActivity {
                 final String username = editTextUsername.getText().toString();
                 final String password = editTextPassword.getText().toString();
 
-                // Execute AsyncTask to check if the username already exists in the background
-                new CheckUsernameAsyncTask().execute(username, password);
+                // Check if username and password are not empty
+                if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+                    // Show an error message if either username or password is empty
+                    Toast.makeText(Register.this, "Username and password cannot be empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Execute AsyncTask to check if the username already exists in the background
+                    new CheckUsernameAsyncTask().execute(username, password);
+                }
             }
         });
+
     }
 
     private class CheckUsernameAsyncTask extends AsyncTask<String, Void, Boolean> {
