@@ -8,6 +8,7 @@ A simple contacts application that allows users to manage their contacts. Users 
 
 - **Signup and Login:** Users can sign up and log in securely.
 - **Contact List:** View, add, edit, and delete contacts.
+- **special options:** click on the contact's icon to unHide the options
 - **Full Contact Details:** Option to see full contact details from the list.
 - **User-Specific Contacts:** Each user sees only their contacts.
 - **Customizable Contact List View:** Users can customize the information displayed in the contact list.
