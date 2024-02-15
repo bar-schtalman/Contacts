@@ -6,19 +6,28 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AddContact extends AppCompatActivity {
-    private EditText firstNameTxt, lastNameTxt, phoneTxt, companyTxt, emailTxt, addressTxt;
-    private String firstName, lastName, phone, company, email, address, gender;
+    private EditText firstNameTxt;
+    private EditText lastNameTxt;
+    private EditText phoneTxt;
+    private EditText companyTxt;
+    private EditText emailTxt;
+    private EditText addressTxt;
+    private String firstName;
+    private String lastName;
+    private String phone;
+    private String company;
+    private String email;
+    private String address;
+    private String gender;
     private long uid;
     private Button addContact;
-    private String API = "https://api.genderize.io/?name=";
+    private String apiEndpoint = "https://api.genderize.io/?name=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +56,6 @@ public class AddContact extends AppCompatActivity {
                 // Get input values
                 firstName = firstNameTxt.getText().toString();
                 lastName = lastNameTxt.getText().toString();
-
-                // Get other input values
                 phone = phoneTxt.getText().toString();
                 company = companyTxt.getText().toString();
                 email = emailTxt.getText().toString();
@@ -59,7 +66,7 @@ public class AddContact extends AppCompatActivity {
                     // Create and execute the AsyncTask to fetch gender
                     GenderizeAsyncTask genderizeAsyncTask = new GenderizeAsyncTask(new GenderizeAsyncTask.GenderizeCallback() {
                         @Override
-                        public void onGenderFetched(String fetchedGender) {
+                        public void onGenderFetched(final String fetchedGender) {
                             gender = fetchedGender;
                             // Create a new contact object
                             Contact newContact = new Contact(firstName, lastName, phone, company, email, address, gender, uid);
@@ -83,20 +90,20 @@ public class AddContact extends AppCompatActivity {
     }
 
     // AsyncTask for inserting the contact
-    private class InsertContactAsyncTask extends AsyncTask<Contact, Void, Long> {
+    private static class InsertContactAsyncTask extends AsyncTask<Contact, Void, Long> {
         @Override
         protected Long doInBackground(Contact... contacts) {
             // Access the database and perform the insert operation
-            AppDatabase database = AppDatabase.getInstance(getApplicationContext());
+            AppDatabase database = AppDatabase.getInstance(ContactsApplication.getAppContext());
             return database.contactDao().insert(contacts[0]);
         }
 
         @Override
-        protected void onPostExecute(Long contactId) {
+        protected void onPostExecute(final Long contactId) {
             if (contactId > 0) {
-                Intent intent = new Intent(AddContact.this, UserContacts.class);
-                intent.putExtra("id", uid);
-                startActivity(intent);
+                Intent intent = new Intent(ContactsApplication.getAppContext(), UserContacts.class);
+                intent.putExtra("id", contactId);
+                ContactsApplication.getAppContext().startActivity(intent);
                 // Add any other UI updates or navigation code if needed
             }
         }
