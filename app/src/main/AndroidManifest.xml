@@ -24,9 +24,6 @@
             android:name=".UserContacts"
             android:exported="false" />
         <activity
-            android:name=".Details"
-            android:exported="false" />
-        <activity
             android:name=".Register"
             android:exported="false"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />

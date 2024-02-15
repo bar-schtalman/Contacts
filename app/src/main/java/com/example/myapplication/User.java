@@ -15,6 +15,8 @@ public class User {
     @ColumnInfo(name = "password")
     private String password;
 
+    // Getters and Setters
+
     public long getId() {
         return id;
     }

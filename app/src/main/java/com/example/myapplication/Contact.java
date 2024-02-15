@@ -41,7 +41,7 @@ public class Contact implements Serializable {
         // Default constructor required by Room
     }
 
-    public Contact(String firstName, String lastName, String phoneNumber, String companyName, String email, String address,String gender, long userId) {
+    public Contact(String firstName, String lastName, String phoneNumber, String companyName, String email, String address, String gender, long userId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -114,14 +114,15 @@ public class Contact implements Serializable {
         return userId;
     }
 
-
-    public String getGender(){
+    public String getGender() {
         return gender;
     }
-    public void setGender(String gender){
-        this.gender=gender;
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
-    public void editContact(String firstName,String lastName,String phone,String address,String company,String email,String gender){
+
+    public void editContact(String firstName, String lastName, String phone, String address, String company, String email, String gender) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -130,5 +131,4 @@ public class Contact implements Serializable {
         this.gender = gender;
         this.companyName = company;
     }
-
 }

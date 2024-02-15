@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:textStyle="italic"
-
         android:minHeight="48dp"
          />
     <TextView
@@ -21,7 +20,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:textStyle="italic"
-
         android:minHeight="48dp"
         />
     <TextView
@@ -30,7 +28,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:textStyle="italic"
-
         android:minHeight="48dp"
          />
 
@@ -41,7 +38,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:textStyle="italic"
-
         android:minHeight="48dp"
         />
     <TextView
@@ -50,16 +46,14 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:textStyle="italic"
-
         android:minHeight="48dp"
         />
     <TextView
-        android:id="@+id/dialogAddres"
+        android:id="@+id/dialogAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:textStyle="italic"
-
         android:minHeight="48dp"
         />
     <TextView
@@ -68,7 +62,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:textStyle="italic"
-
         android:minHeight="48dp"
         />
 

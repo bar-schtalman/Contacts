@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -12,22 +13,24 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Register extends AppCompatActivity {
-    Button register;
-    EditText editTextUsername, editTextPassword;
+    private Button register;
+    private EditText editTextUsername, editTextPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        // Initialize UI elements
         register = findViewById(R.id.button);
         editTextUsername = findViewById(R.id.usernameEditText);
         editTextPassword = findViewById(R.id.passwordEditText);
 
+        // Set click listener for the "Register" button
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Assuming you have retrieved username and password from your UI
+                // Get username and password from the input fields
                 final String username = editTextUsername.getText().toString();
                 final String password = editTextPassword.getText().toString();
 

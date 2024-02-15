@@ -18,46 +18,47 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserContacts extends AppCompatActivity {
-    Button add, logout,sort,change_details;
-    long uid;
-    int sortOp = 1;
+    // UI elements
+    private Button add, logout, sort, change_details;
+    private long uid;
+    private int sortOp = 1;
     private ContactDao contactDao;
 
     private List<String> selectedDetails;
-
-    //TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_contacts);
+
+        // Initialize UI elements
         add = findViewById(R.id.add);
         sort = findViewById(R.id.sort);
         selectedDetails = getDefaultSelectedDetails();
         change_details = findViewById(R.id.changeDetails);
-        //textView = findViewById(R.id.contactView);
 
+        // Get user ID from the intent
         Intent intent = getIntent();
         if (intent != null) {
             uid = intent.getLongExtra("id", 0);
-            Toast.makeText(UserContacts.this, "uid is " + uid, Toast.LENGTH_SHORT).show();
         }
+
+        // Initialize database and retrieve contacts
         AppDatabase appDatabase = AppDatabase.getInstance(getApplicationContext());
         contactDao = appDatabase.contactDao();
         new RetrieveContactsAsyncTask().execute(uid);
 
+        // Set click listeners for buttons
         logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Navigate to the login activity on logout
                 Intent intent = new Intent(UserContacts.this, Login.class);
                 startActivity(intent);
             }
@@ -66,6 +67,7 @@ public class UserContacts extends AppCompatActivity {
         change_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Handle the click event for changing details
                 onChangeDetailsButtonClick(view);
             }
         });
@@ -73,6 +75,7 @@ public class UserContacts extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Navigate to the add contact activity
                 Intent intent = new Intent(UserContacts.this, AddContact.class);
                 intent.putExtra("id", uid);
                 startActivity(intent);
@@ -82,6 +85,7 @@ public class UserContacts extends AppCompatActivity {
         sort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Show a popup menu for sorting options
                 Context context = getApplicationContext();
                 PopupMenu popupMenu = new PopupMenu(context, sort);
                 MenuInflater inflater = popupMenu.getMenuInflater();
@@ -116,9 +120,9 @@ public class UserContacts extends AppCompatActivity {
                 popupMenu.show();
             }
         });
-
     }
 
+    // Method to handle the click event for changing details
     private void onChangeDetailsButtonClick(View view) {
         // Inflate the dialog layout
         View dialogView = getLayoutInflater().inflate(R.layout.change_details_dialog, null);
@@ -130,8 +134,8 @@ public class UserContacts extends AppCompatActivity {
         CheckBox checkBoxAddress = dialogView.findViewById(R.id.checkBoxAddress);
         CheckBox checkBoxEmail = dialogView.findViewById(R.id.checkBoxEmail);
         CheckBox checkGender = dialogView.findViewById(R.id.checkBoxGender);
-        // Find other checkboxes...
 
+        // Find other checkboxes...
         Button btnApply = dialogView.findViewById(R.id.apply);
 
         // Set the initial state of checkboxes based on selectedDetails
@@ -141,6 +145,7 @@ public class UserContacts extends AppCompatActivity {
         checkBoxEmail.setChecked(selectedDetails.contains("email"));
         checkBoxAddress.setChecked(selectedDetails.contains("address"));
         checkGender.setChecked(selectedDetails.contains("gender"));
+
         // Set other checkboxes...
 
         // Create a dialog
@@ -157,19 +162,19 @@ public class UserContacts extends AppCompatActivity {
                 if (checkBoxFullName.isChecked()) {
                     selectedDetails.add("first_name");
                 }
-                if(checkBoxPhoneNumber.isChecked()){
+                if (checkBoxPhoneNumber.isChecked()) {
                     selectedDetails.add("phone_number");
                 }
-                if(checkBoxEmail.isChecked()){
+                if (checkBoxEmail.isChecked()) {
                     selectedDetails.add("email");
                 }
-                if(checkBoxCompany.isChecked()){
+                if (checkBoxCompany.isChecked()) {
                     selectedDetails.add("company_name");
                 }
-                if(checkBoxAddress.isChecked()){
+                if (checkBoxAddress.isChecked()) {
                     selectedDetails.add("address");
                 }
-                if(checkGender.isChecked()){
+                if (checkGender.isChecked()) {
                     selectedDetails.add("gender");
                 }
                 // Add other details...
@@ -185,24 +190,32 @@ public class UserContacts extends AppCompatActivity {
         // Show the dialog
         dialog.show();
     }
+
+    // Method to update the UI with selected details
     private void updateUIWithSelectedDetails() {
         // Get the contacts and update the UI
         new RetrieveContactsAsyncTask().execute(uid);
     }
 
+    // Method to retrieve default selected details
+    private List<String> getDefaultSelectedDetails() {
+        List<String> defaultDetails = new ArrayList<>();
+        defaultDetails.add("first_name");
+        defaultDetails.add("last_name");
+        defaultDetails.add("phone_number");
+        return defaultDetails;
+    }
 
-
+    // AsyncTask to retrieve contacts from the database
     private class RetrieveContactsAsyncTask extends AsyncTask<Long, Void, List<Contact>> {
         @Override
         protected List<Contact> doInBackground(Long... params) {
             long userId = params[0];
-            if(sortOp == 1 ) {
+            if (sortOp == 1) {
                 return contactDao.getContactsForUserByFirstName(userId);
-            }
-            else if(sortOp == 2){
+            } else if (sortOp == 2) {
                 return contactDao.getContactsForUserByLastName(userId);
-                }
-            else{
+            } else {
                 return contactDao.getContactsForUserByPhoneNumber(userId);
             }
         }
@@ -216,7 +229,10 @@ public class UserContacts extends AppCompatActivity {
             contactContainer.removeAllViews(); // Clear existing views
 
             for (Contact c : userContacts) {
-                View contactItemView = getLayoutInflater().inflate(R.layout.contact_item3, null);
+                // Inflate the contact item view
+                View contactItemView = getLayoutInflater().inflate(R.layout.contact_item, null);
+
+                // Find UI elements in the contact item view
                 TextView contactName = contactItemView.findViewById(R.id.textName);
                 TextView contactEmail = contactItemView.findViewById(R.id.textEmail);
                 TextView contactAddress = contactItemView.findViewById(R.id.textAddress);
@@ -231,7 +247,7 @@ public class UserContacts extends AppCompatActivity {
                 ImageView viewIcon = contactItemView.findViewById(R.id.viewIcon);
 
                 // Set contact information
-                String name = c.getFirstName() +" "+c.getLastName();
+                String name = c.getFirstName() + " " + c.getLastName();
                 contactName.setText(name);
                 contactEmail.setText(c.getEmail());
                 contactAddress.setText(c.getAddress());
@@ -239,6 +255,7 @@ public class UserContacts extends AppCompatActivity {
                 contactCompany.setText(c.getCompanyName());
                 contactPhoneNumber.setText(c.getPhoneNumber());
 
+                // Set visibility based on selected details
                 contactName.setVisibility(selectedDetails.contains("first_name") ? View.VISIBLE : View.GONE);
                 contactEmail.setVisibility(selectedDetails.contains("email") ? View.VISIBLE : View.GONE);
                 contactAddress.setVisibility(selectedDetails.contains("address") ? View.VISIBLE : View.GONE);
@@ -246,16 +263,14 @@ public class UserContacts extends AppCompatActivity {
                 contactCompany.setVisibility(selectedDetails.contains("company_name") ? View.VISIBLE : View.GONE);
                 contactPhoneNumber.setVisibility(selectedDetails.contains("phone_number") ? View.VISIBLE : View.GONE);
 
-
+                // Set the tag for the contact item view
                 contactItemView.setTag(c.getId());
 
-                // Add click listener to the contact name (contactInfo)
-
+                // Add click listener to the contact image
                 contactImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d("UserContacts", "inside contectimage clicklisitner");
-
+                        Log.d("UserContacts", "inside contact image click listener");
                         toggleIconsVisibility(contactItemView);
                     }
                 });
@@ -267,8 +282,8 @@ public class UserContacts extends AppCompatActivity {
                         // Handle edit click
                         // You can open an edit activity or perform any other action
                         // based on the clicked contact
-                        Intent intent = new Intent(UserContacts.this,EditContact.class);
-                        intent.putExtra("contact",c);
+                        Intent intent = new Intent(UserContacts.this, EditContact.class);
+                        intent.putExtra("contact", c);
                         startActivity(intent);
                     }
                 });
@@ -276,12 +291,13 @@ public class UserContacts extends AppCompatActivity {
                 deleteIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // Handle delete click
                         long contactId = (long) contactItemView.getTag();
-                        new DeleteContactAsyncTask().execute(contactId);                    }
+                        new DeleteContactAsyncTask().execute(contactId);
+                    }
                 });
 
-
-
+                // Set click listeners for phone, SMS, and view icons
                 phoneIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -301,56 +317,18 @@ public class UserContacts extends AppCompatActivity {
                 viewIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        // Show a dialog with detailed contact information
                         showViewContactDialog(c);
                     }
                 });
-
-
 
                 // Add the contact item view to the contact container
                 contactContainer.addView(contactItemView);
             }
         }
-
-
-        private String getFormattedContactText(Contact contact) {
-            // Build the contact information based on selected details
-            StringBuilder formattedText = new StringBuilder();
-
-            for (String detail : selectedDetails) {
-                if ("first_name".equals(detail)) {
-                    formattedText.append(contact.getFirstName()).append(" ");
-                } else if ("last_name".equals(detail)) {
-                    formattedText.append(contact.getLastName()).append(" ");
-                } else if ("phone_number".equals(detail)) {
-                    formattedText.append(contact.getPhoneNumber()).append(" ");
-                } else if ("email".equals(detail)) {
-                    formattedText.append(contact.getEmail()).append(" ");
-                } else if ("company_name".equals(detail)) {
-                    formattedText.append(contact.getCompanyName()).append(" ");
-                } else if ("address".equals(detail)) {
-                    formattedText.append(contact.getAddress()).append(" ");
-                } else if ("gender".equals(detail)) {
-                    formattedText.append(contact.getGender()).append(" ");
-                }
-                // Add other conditions for additional details...
-                Log.d("UserContacts", "Selected Details: " + selectedDetails);
-                Log.d("UserContacts", "Formatted Contact Text: " + formattedText.toString());
-            }
-
-            return formattedText.toString().trim();
-        }
     }
 
-    private List<String> getDefaultSelectedDetails() {
-        List<String> defaultDetails = new ArrayList<>();
-        defaultDetails.add("first_name");
-        defaultDetails.add("last_name");
-        defaultDetails.add("phone_number");
-        return defaultDetails;
-    }
-
-
+    // Method to show a dialog with detailed contact information
     private void showViewContactDialog(Contact contact) {
         // Create a custom dialog
         Dialog dialog = new Dialog(UserContacts.this);
@@ -362,7 +340,7 @@ public class UserContacts extends AppCompatActivity {
         TextView phoneNumberTextView = dialog.findViewById(R.id.dialogPhoneNumber);
         TextView emailTextView = dialog.findViewById(R.id.dialogEmail);
         TextView companyTextView = dialog.findViewById(R.id.dialogCompany);
-        TextView addressTextView = dialog.findViewById(R.id.dialogAddres);
+        TextView addressTextView = dialog.findViewById(R.id.dialogAddress);
         TextView genderTextView = dialog.findViewById(R.id.dialogGender);
 
         // Set values for UI elements based on the contact object
@@ -373,12 +351,12 @@ public class UserContacts extends AppCompatActivity {
         companyTextView.setText("Company: " + contact.getCompanyName());
         addressTextView.setText("Address: " + contact.getAddress());
         genderTextView.setText("Gender: " + contact.getGender());
+
         // Show the dialog
         dialog.show();
     }
 
-
-
+    // Method to toggle the visibility of icons in a contact item view
     private void toggleIconsVisibility(View clickedContactItem) {
         // Find the icons in the clicked contact item
         ImageView editIcon = clickedContactItem.findViewById(R.id.editIcon);
@@ -396,6 +374,7 @@ public class UserContacts extends AppCompatActivity {
         viewIcon.setVisibility(visibility);
     }
 
+    // AsyncTask to delete a contact from the database
     private class DeleteContactAsyncTask extends AsyncTask<Long, Void, Void> {
         @Override
         protected Void doInBackground(Long... params) {
@@ -405,6 +384,7 @@ public class UserContacts extends AppCompatActivity {
             database.contactDao().deleteContact(contactId);
             return null;
         }
+
         @Override
         protected void onPostExecute(Void aVoid) {
             // Handle any post-delete operations

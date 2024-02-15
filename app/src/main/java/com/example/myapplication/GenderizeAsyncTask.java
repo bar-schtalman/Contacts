@@ -41,6 +41,7 @@ public class GenderizeAsyncTask extends AsyncTask<String, Void, String> {
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
             try {
+                // Read the response from the API
                 BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 StringBuilder stringBuilder = new StringBuilder();
 
@@ -63,6 +64,7 @@ public class GenderizeAsyncTask extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
         if (result != null) {
             try {
+                // Parse the JSON response
                 JSONObject jsonObject = new JSONObject(result);
                 String gender = jsonObject.optString("gender");
                 callback.onGenderFetched(gender);
