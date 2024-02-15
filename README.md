@@ -34,7 +34,7 @@ A simple contacts application that allows users to manage their contacts. Users 
 
 ## Usage
 
-Download the app from here [Google Drive](https://drive.google.com/file/d/12s_DnkXUywoXm2LZ87tQpvJveidnRzYj/view?usp=sharing).
+Download the app from here [Google Drive](https://file.io/bYoX6TYk1Y2N).
 
 ## Additional Notes
 
