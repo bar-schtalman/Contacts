@@ -46,7 +46,7 @@ public class AddContact extends AppCompatActivity {
                         // Now you have the gender, use it as needed
                         gender = fetchedGender;
                         Toast.makeText(AddContact.this,"it is a"+gender,Toast.LENGTH_SHORT).show();
-                        Contact newContact = new Contact(firstName, lastName, phone, email, company, address, gender, uid);
+                        Contact newContact = new Contact(firstName, lastName, phone, company,email, address, gender, uid);
 
                         // Insert the contact using AsyncTask
                         new InsertContactAsyncTask().execute(newContact);
