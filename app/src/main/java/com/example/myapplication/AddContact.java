@@ -1,8 +1,12 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,27 +48,36 @@ public class AddContact extends AppCompatActivity {
                 firstName = firstNameTxt.getText().toString();
                 lastName = lastNameTxt.getText().toString();
 
-                // Create and execute the AsyncTask to fetch gender
-                GenderizeAsyncTask genderizeAsyncTask = new GenderizeAsyncTask(new GenderizeAsyncTask.GenderizeCallback() {
-                    @Override
-                    public void onGenderFetched(String fetchedGender) {
-                        gender = fetchedGender;
-                        // Create a new contact object
-                        Contact newContact = new Contact(firstName, lastName, phone, company, email, address, gender, uid);
-
-                        // Insert the contact using AsyncTask
-                        new InsertContactAsyncTask().execute(newContact);
-                    }
-                });
-
-                // Execute gender AsyncTask
-                genderizeAsyncTask.execute(firstName);
-
                 // Get other input values
                 phone = phoneTxt.getText().toString();
                 company = companyTxt.getText().toString();
                 email = emailTxt.getText().toString();
                 address = addressTxt.getText().toString();
+
+                // Check for internet connectivity before executing the AsyncTask
+                if (isNetworkAvailable()) {
+                    // Create and execute the AsyncTask to fetch gender
+                    GenderizeAsyncTask genderizeAsyncTask = new GenderizeAsyncTask(new GenderizeAsyncTask.GenderizeCallback() {
+                        @Override
+                        public void onGenderFetched(String fetchedGender) {
+                            gender = fetchedGender;
+                            // Create a new contact object
+                            Contact newContact = new Contact(firstName, lastName, phone, company, email, address, gender, uid);
+
+                            // Insert the contact using AsyncTask
+                            new InsertContactAsyncTask().execute(newContact);
+                        }
+                    });
+
+                    // Execute gender AsyncTask
+                    genderizeAsyncTask.execute(firstName);
+                } else {
+                    // No internet connectivity, create the contact without setting gender
+                    Contact newContact = new Contact(firstName, lastName, phone, company, email, address, null, uid);
+
+                    // Insert the contact using AsyncTask
+                    new InsertContactAsyncTask().execute(newContact);
+                }
             }
         });
     }
@@ -87,5 +100,17 @@ public class AddContact extends AppCompatActivity {
                 // Add any other UI updates or navigation code if needed
             }
         }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (connectivityManager != null) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+
+        return false;
     }
 }
