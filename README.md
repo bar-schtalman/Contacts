@@ -45,4 +45,3 @@ Include any additional information or notes that might be relevant, such as know
 
 - [Genderize API](https://api.genderize.io/?name=luc) for providing gender information.
 
-Feel free to customize the template according to your project's specifics. Don't forget to include the appropriate links, paths, and details specific to your application.
