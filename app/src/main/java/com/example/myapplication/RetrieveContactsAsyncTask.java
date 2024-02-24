@@ -59,8 +59,6 @@ public class RetrieveContactsAsyncTask extends AsyncTask<Long, Void, List<Contac
 
         contactContainer.removeAllViews(); // Clear existing views
 
-        LayoutInflater inflater = LayoutInflater.from(context);
-
         for (Contact c : userContacts) {
             appendContact(this.contactContainer, c, selectedDetails);
         }
